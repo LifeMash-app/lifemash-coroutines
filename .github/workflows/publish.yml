@@ -1,0 +1,36 @@
+name: Publish
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Verify release tag matches project version
+        shell: bash
+        run: |
+          release_version=$(sed -n 's/^version=//p' gradle.properties)
+          test "$GITHUB_REF_NAME" = "v$release_version"
+      - name: Verify library and publication metadata
+        run: ./gradlew --no-daemon check assemble generatePomFileForLibraryPublication
+      - name: Publish to GitHub Packages
+        run: ./gradlew --no-daemon publishLibraryPublicationToGitHubPackagesRepository
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
