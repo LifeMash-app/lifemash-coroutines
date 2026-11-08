@@ -1,6 +1,6 @@
 # LifeMash Coroutines
 
-<mark>**Android와 서버에서 사용하는 Kotlin/JVM 코루틴 확장 라이브러리입니다.**</mark> 제품 모델과 Android API에 의존하지 않습니다. 지금은 출력 버퍼 없이 구독을 전환하는 `flatMapLatestUnbuffered` 하나를 제공합니다.
+Android와 서버에서 사용하는 Kotlin/JVM 코루틴 확장 라이브러리입니다. 제품 모델과 Android API에 의존하지 않습니다. 지금은 출력 버퍼 없이 구독을 전환하는 `flatMapLatestUnbuffered` 하나를 제공합니다.
 
 ![상위 값이 바뀔 때 flatMapLatestUnbuffered의 내부 구독과 소비자](docs/images/readme-flatmaplatest-unbuffered.png)
 
@@ -8,7 +8,7 @@
 
 ## 사용
 
-<mark>**출력 결과를 쌓아둘 필요가 없는 구독 전환에 사용합니다.**</mark>
+계정처럼 상위 값이 바뀌면 이전 구독을 버리고, 출력 결과를 쌓아둘 필요가 없는 구독 전환에 사용합니다.
 
 ```kotlin
 import com.lifemash.coroutines.flatMapLatestUnbuffered
@@ -30,7 +30,7 @@ val calendar = accountFlow.flatMapLatestUnbuffered { account ->
 
 ## 의존성
 
-<mark>**GitHub Packages에서 받으며, 읽기 자격은 저장소 파일에 작성하지 않습니다.**</mark>
+GitHub Packages에서 받으며, 읽기 자격은 저장소 파일에 작성하지 않습니다.
 
 ```kotlin
 implementation("com.lifemash:lifemash-coroutines:0.1.0")
@@ -58,7 +58,7 @@ maven {
 
 ## 빌드와 검증
 
-<mark>**JDK 21에서 `./gradlew check assemble`을 실행합니다.**</mark>
+JDK 21에서 `./gradlew check assemble`을 실행합니다.
 
 | 항목 | 버전 |
 | --- | --- |
@@ -73,7 +73,7 @@ maven {
 
 ## 릴리스
 
-<mark>**이미 게시한 버전을 덮어쓰지 않습니다.**</mark>
+버전 태그를 게시하면 Publish workflow가 GitHub Packages에 올립니다. 이미 게시한 버전은 덮어쓰지 않습니다.
 
 1. `gradle.properties`의 버전과 [변경 기록](CHANGELOG.md)을 갱신합니다
 2. `./gradlew check assemble generatePomFileForLibraryPublication`으로 검증합니다
